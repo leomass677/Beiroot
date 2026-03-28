@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+
+  /* Primary  bronze-spice */
+  --color-primary: #fc6203;
+  --color-primary-50: #ffefe6;
+  --color-primary-100: #fee0cd;
+  --color-primary-200: #fec09a;
+  --color-primary-300: #fda168;
+  --color-primary-400: #fd8235;
+  --color-primary-500: #fc6203;
+  --color-primary-600: #ca4f02;
+  --color-primary-700: #973b02;
+  --color-primary-800: #652701;
+  --color-primary-900: #321401;
+  --color-primary-950: #230e00;
+
+  /* Secondary  harvest-gold*/
+  --color-secondary: #e2931d;
+  --color-secondary-50: #fcf4e8;
+  --color-secondary-100: #f9e9d2;
+  --color-secondary-200: #f3d4a5;
+  --color-secondary-300: #edbe78;
+  --color-secondary-400: #e8a94a;
+  --color-secondary-500: #e2931d;
+  --color-secondary-600: #b57617;
+  --color-secondary-700: #875812;
+  --color-secondary-800: #5a3b0c;
+  --color-secondary-900: #2d1d06;
+  --color-secondary-950: #201504;
+
+  /* Background & Surface */
+  --color-bg: #f7f7f2;
+  --color-surface: #fbfbf8;
+  --color-dark: #040404;
+
+  /* Fonts */
+  --font-primary: "Roboto Flex", sans-serif;
+  --font-secondary: "Roboto", sans-serif;
+
+  /* Font Sizes */
+  --text-xxs: 12px;
+  --text-xs: 14px;
+  --text-sm: 16px;
+  --text-md: 18px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 40px;
+  --text-4xl: 48px;
+  --text-5xl: 64px;
+
+  /* Line Heights */
+  --leading-xs: 20px;
+  --leading-sm: 24px;
+  --leading-md: 28px;
+  --leading-lg: 28px;
+  --leading-xl: 32px;
+  --leading-2xl: 40px;
+  --leading-3xl: 48px;
+  --leading-4xl: 56px;
+  --leading-5xl: 72px;
+
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+}
+
+@layer utilities {
+  /* Gradient 1: Primary warm gradient */
+  .bg-gradient-primary {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary-100),
+      var(--color-primary-500),
+      var(--color-primary-800)
+    );
+  }
+
+  /* Gradient 2: Secondary sunset gradient */
+  .bg-gradient-secondary {
+    background: linear-gradient(
+      120deg,
+      var(--color-secondary-200),
+      var(--color-secondary-500),
+      var(--color-secondary-700)
+    );
+  }
+
+  /* Gradient 3: Mixed primary & secondary gradient */
+  .bg-gradient-mixed {
+    background: linear-gradient(
+      90deg,
+      var(--color-primary-300),
+      var(--color-secondary-400),
+      var(--color-primary-600)
+    );
+  }
+}
