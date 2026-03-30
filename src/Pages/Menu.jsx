@@ -9,7 +9,14 @@ const Menu = () => {
     const item = cart.find((cartItem) => cartItem.id === id);
     return item ? item.quantity : 0;
   };
-  return <div>Menu</div>;
+  return (
+    <div>
+      Menu
+      <section className="mt-299 w-full h-screen bg-amber-300" id="order-now">
+        {" "}
+      </section>
+    </div>
+  );
 };
 
 export default Menu;
