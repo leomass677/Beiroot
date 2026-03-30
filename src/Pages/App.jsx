@@ -1,9 +1,10 @@
 import React from "react";
+import Router from "../route/router";
 
 const App = () => {
   return (
-    <div className="w-full h-screen bg-secondary-200 flex items-center justify-center text-5xl">
-      App
+    <div className="w-full h-screen">
+      <Router />
     </div>
   );
 };
