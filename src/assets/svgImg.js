@@ -15,6 +15,8 @@ import fresh from "./Fresh.svg";
 import extras from "./Extras.svg";
 import community from "./community.svg";
 import passion from "./Passion.svg";
+import gallery from "../assets/gallery.svg";
+import shop from "../assets/shop.jpg";
 
 export const svgImg = {
   beiroot,
@@ -34,4 +36,6 @@ export const svgImg = {
   extras,
   community,
   passion,
+  gallery,
+  shop,
 };
