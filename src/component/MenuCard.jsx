@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartProvider";
 import { IoMdCart } from "react-icons/io";
+import { IoIosAdd } from "react-icons/io";
+import { IoIosRemove } from "react-icons/io";
 
 const MenuCard = ({ item }) => {
   const { cart, addItem, updateQuantity, removeItem, formatCurrency } =
@@ -179,23 +181,23 @@ const MenuCard = ({ item }) => {
 
             {/* Size Selection - Flex Row with gap-2 */}
             {availableSizes.length > 0 && (
-              <div className="flex flex-row gap-2 mb-3 flex-wrap">
+              <div className="flex flex-row gap-2 mb-2 flex-wrap">
                 {availableSizes.map((size) => (
-                  <button
+                  <span
                     key={size}
                     onClick={() => setSelectedSize(size)}
                     className={`
-                      px-[14px] py-1  rounded-sm text-xs lg:text-sm font-medium cursor-pointer transition-all duration-200 border-[1.5px]
+                      px-[14px]  py-[4px]    rounded-sm text-xs lg:text-sm font-medium li cursor-pointer transition-all duration-200 border-[1.5px]
                       ${
                         selectedSize === size
-                          ? "text-primary-500 border-primary-500 bg-transparent"
-                          : "text-secondary-400 border-transparent hover:text-primary-500 hover:border-primary-500"
+                          ? "text-primary-500  border-primary-500 bg-transparent"
+                          : "text-secondary-400 border-transparent hover:text-primary-500 hover:border-primary-100"
                       }
                     `}
                   >
                     {sizeOptions[size] ||
                       size.charAt(0).toUpperCase() + size.slice(1)}
-                  </button>
+                  </span>
                 ))}
               </div>
             )}
@@ -236,7 +238,7 @@ const MenuCard = ({ item }) => {
                   `}
                 >
                   <IoMdCart className="text-sm lg:text-base" />
-                  <span>Add</span>
+                  <span>Add to Cart</span>
                 </motion.button>
               ) : (
                 <motion.div
@@ -245,22 +247,22 @@ const MenuCard = ({ item }) => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 10 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center gap-2 min-w-[100px] lg:min-w-[120px] justify-end"
+                  className="flex items-center gap-2  min-w-[100px] lg:min-w-[120px] justify-end"
                 >
                   <button
                     onClick={handleDecrement}
-                    className="w-7 h-7 lg:w-8 lg:h-8 rounded-md bg-red-500 text-white flex items-center justify-center text-lg lg:text-xl font-bold hover:bg-red-600 transition-colors"
+                    className="w-7 h-7 lg:w-8 lg:h-8 rounded-full cursor-pointer bg-gray-100 text-dark flex items-center justify-center text-lg lg:text-xl font-bold hover:bg-secondary-400 transition-colors"
                   >
-                    −
+                    <IoIosRemove />
                   </button>
                   <span className="text-dark font-semibold text-base lg:text-lg min-w-[24px] lg:min-w-[32px] text-center">
                     {currentQuantity}
                   </span>
                   <button
                     onClick={handleIncrement}
-                    className="w-7 h-7 lg:w-8 lg:h-8 rounded-md bg-green-500 text-white flex items-center justify-center text-lg lg:text-xl font-bold hover:bg-green-600 transition-colors"
+                    className="w-7 h-7 lg:w-8 lg:h-8 cursor-pointer rounded-full bg-primary-500 text-white flex items-center justify-center text-lg lg:text-xl font-bold hover:bg-primary-600 transition-colors"
                   >
-                    +
+                    <IoIosAdd />
                   </button>
                 </motion.div>
               )}
