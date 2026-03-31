@@ -3,7 +3,7 @@ import Hero from "../component/Hero";
 
 const Home = () => {
   return (
-    <div className="">
+    <div className="max-w-[1440px] w-full scroll-0">
       <Hero />
     </div>
   );
