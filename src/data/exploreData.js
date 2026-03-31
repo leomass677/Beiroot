@@ -30,7 +30,7 @@ export const exploreData = [
   {
     id: 5,
     title: "Extras",
-    description: "Additional items to enhance your order.",
+    description: "Perfect extras for your meal.",
     image: svgImg.extras,
   },
 ];
