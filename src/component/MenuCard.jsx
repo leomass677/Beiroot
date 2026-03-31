@@ -94,9 +94,9 @@ const MenuCard = ({ item }) => {
       transition={{ duration: 0.3 }}
     >
       {/* Mobile/Tablet: Row Layout, Desktop: Column Layout */}
-      <div className="flex flex-row lg:flex-col h-full">
+      <div className="flex flex-row lg:flex-col h-full ">
         {/* Image Section - Mobile: 130px, Desktop: Full width */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 lg:max-h-[180px] to-secondary-50 w-[130px] lg:w-full flex-shrink-0 lg:aspect-square">
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 lg:max-h-[140px]  to-secondary-50 w-[130px] lg:w-full flex-shrink-0 lg:aspect-square">
           {item.image && !imageError ? (
             <motion.img
               src={item.image}
@@ -169,9 +169,9 @@ const MenuCard = ({ item }) => {
           <div>
             {/* Header */}
             <div className="mb-2">
-              <h3 className="text-dark font-semibold text-sm md:text-base lg:text-lg line-clamp-2 leading-tight">
+              <h6 className="text-dark font-semibold text-sm md:text-base lg:text-[16px] line-clamp-2 leading-tight">
                 {item.name}
-              </h3>
+              </h6>
               {item.category && (
                 <p className="text-gray-500 text-xs lg:text-sm font-medium mt-0.5">
                   {item.category}
@@ -181,7 +181,7 @@ const MenuCard = ({ item }) => {
 
             {/* Size Selection - Flex Row with gap-2 */}
             {availableSizes.length > 0 && (
-              <div className="flex flex-row gap-2 mb-2 flex-wrap">
+              <div className="flex flex-row gap-2 flex-wrap">
                 {availableSizes.map((size) => (
                   <span
                     key={size}
@@ -211,7 +211,7 @@ const MenuCard = ({ item }) => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.2 }}
             >
-              <span className="text-dark font-semibold text-base lg:text-xl">
+              <span className="text-dark font-semibold  text-base">
                 {formatCurrency(totalPrice)}
               </span>
             </motion.div>
@@ -229,7 +229,7 @@ const MenuCard = ({ item }) => {
                   exit={{ opacity: 0, x: 10 }}
                   transition={{ duration: 0.2 }}
                   className={`
-                    flex items-center justify-center gap-1.5 px-3 py-1.5 lg:px-4 lg:py-2 rounded-md font-medium text-sm lg:text-base transition-all duration-300 min-w-[100px] lg:min-w-[134px] min-h-[32px] lg:min-h-[40px]
+                    flex items-center justify-center gap-1.5 px-3 py-1.5 lg:px-4 lg:py-1 rounded-md font-medium text-sm lg:text-base transition-all duration-300 min-w-[100px] lg:min-w-[134px] h-[32px] lg:h-[40px]
                     ${
                       price === 0
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"

@@ -116,7 +116,7 @@ const ExploreOurMenu = () => {
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      className="relative flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 pb-12 md:pb-16 lg:pb-20 gap-6 md:gap-7 lg:gap-8 bg-gradient-to-b from-white to-gray-50"
+      className="relative flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 pb-12 md:pb-16 lg:pb-20 gap-6 md:gap-7 lg:gap-8 bg-gradient-to-b from-shade to-surface"
     >
       {/* Header Section */}
       <motion.div
@@ -140,10 +140,10 @@ const ExploreOurMenu = () => {
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0 || isAnimating}
-              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-white rounded-full shadow-sm hover:shadow transition-all duration-200 ${
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-gray-50 rounded-full transition-all duration-200 ${
                 currentIndex === 0 || isAnimating
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-primary-500 hover:text-white"
+                  : "hover:bg-gray-100 hover:scale-105 cursor-pointer hover:text-white"
               }`}
               aria-label="Previous"
             >
@@ -155,10 +155,10 @@ const ExploreOurMenu = () => {
             <button
               onClick={handleNext}
               disabled={currentIndex >= maxIndex || isAnimating}
-              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-white rounded-full shadow-sm hover:shadow transition-all duration-200 ${
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-gray-50 rounded-full transition-all duration-200 ${
                 currentIndex >= maxIndex || isAnimating
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-primary-500 hover:text-white"
+                  ? "opacity-50  cursor-not-allowed"
+                  : "hover:bg-gray-100 hover:scale-105 cursor-pointer hover:text-white"
               }`}
               aria-label="Next"
             >
@@ -225,7 +225,7 @@ const ExploreOurMenu = () => {
                 whileHover={{ y: -4 }}
                 className="group cursor-pointer"
               >
-                <div className="flex flex-col items-center justify-center w-full bg-white rounded-xl shadow-sm hover:shadow transition-all duration-200 p-3 sm:p-4 md:p-5 border border-gray-100 hover:border-primary-200">
+                <div className="flex flex-col items-center justify-center flex-1 h-full w-full bg-transparent shadow-none rounded-xl  hover:-translate-y-1 transition-all duration-200 p-3 sm:p-4 md:p-5 border border-surface  hover:border-primary-50">
                   {/* Image Container */}
                   <div className="relative mb-2 md:mb-3">
                     <img

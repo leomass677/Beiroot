@@ -141,7 +141,7 @@ const Hero = () => {
                 key={index}
                 custom={index}
                 variants={tagVariants}
-                className={`text-[14px] sm:text-[16px] md:text-[18px] lg:text-[18px] font-semibold mb-2 sm:mb-3 md:mb-4 ${item.color}`}
+                className={`text-[14px] sm:text-[16px] md:text-[18px] lg:text-[18px] font-medium mb-2 sm:mb-3 md:mb-4 ${item.color}`}
               >
                 {item.name}
               </motion.h6>
