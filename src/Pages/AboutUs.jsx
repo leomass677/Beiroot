@@ -1,5 +1,5 @@
 import React from "react";
-import HeroCard from "../component/heroCard";
+import HeroCard from "../component/HeroCard";
 
 const AboutUs = () => {
   return (
