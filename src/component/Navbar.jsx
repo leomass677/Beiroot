@@ -143,7 +143,7 @@ const Navbar = () => {
               exit="exit"
               className="fixed top-0 right-0 h-full w-full bg-white shadow-2xl z-[10000] overflow-y-auto"
             >
-              <div className="flex flex-col min-h-full pt-8 pb-8">
+              <div className="flex flex-col  min-h-full pt-4 pb-8">
                 {/* Header with Logo and Close Button */}
                 <div className="flex justify-between items-center px-6 pb-6 border-b border-gray-200">
                   <motion.img
@@ -157,15 +157,20 @@ const Navbar = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   />
-                  <button
+                  <motion.button
                     onClick={() => setIsMobileOpen(false)}
+                    whileTap={{ scale: 0.95, rotate: 90 }}
+                    whileHover={{ scale: 1.05, rotate: 0 }}
+                    initial={{ scale: 0.95, rotate: -90 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.2 }}
                     className="p-2 text-dark hover:text-primary-500 transition-colors"
                   >
                     <IoCloseSharp className="text-2xl" />
-                  </button>
+                  </motion.button>
                 </div>
 
-                <div className="flex flex-col gap-6 w-full px-6 mt-6">
+                <div className="flex flex-col gap-6 w-full px-6 mt-2">
                   {/* Navigation Links */}
                   <ul className="flex flex-col w-full">
                     {navItems.map((item) => (
@@ -203,7 +208,7 @@ const Navbar = () => {
                           element.scrollIntoView({ behavior: "smooth" });
                       }, 200);
                     }}
-                    className="bg-gradient-primary cursor-pointer text-white px-6 h-[60px] sm:h-[65px] w-full rounded-xl flex items-center justify-center text-lg font-medium shadow-lg hover:shadow-xl transition-shadow mt-4"
+                    className="bg-gradient-primary cursor-pointer text-white px-6 h-[60px] sm:h-[65px] w-full rounded-md flex items-center justify-center text-lg font-medium  transition-shadow mt-4"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -217,7 +222,7 @@ const Navbar = () => {
                       setIsMobileOpen(false);
                       navigate("/checkout");
                     }}
-                    className="w-full bg-gray-100 hover:bg-gray-200 transition-all h-[55px] sm:h-[60px] flex items-center justify-center rounded-xl border border-gray-300"
+                    className="w-full bg-gray-100 hover:bg-gray-200 transition-all h-[55px] sm:h-[60px] flex items-center justify-center rounded-md border border-gray-200"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -226,7 +231,7 @@ const Navbar = () => {
                       <div className="relative">
                         <IoMdCart className="text-[24px] sm:text-[26px]" />
                         {cartCount > 0 && (
-                          <span className="absolute -top-2 -right-1.5 font-bold bg-primary-600 text-white text-[11px] sm:text-xs rounded-full h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center">
+                          <span className="absolute -top-2 -right-1.5 font-bold bg-primary-600 text-white text-[10px] sm:text-xs rounded-full h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center border-2 border-gray-100">
                             {cartCount > 99 ? "99+" : cartCount}
                           </span>
                         )}
@@ -243,34 +248,27 @@ const Navbar = () => {
                       href="https://www.instagram.com/beiroot/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-[50px] w-[50px] rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-all shadow-md"
+                      className="h-[50px] w-[50px] rounded-full bg-secondary-500 text-shade  flex items-center justify-center transition-all"
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <FaInstagram className="text-[26px] text-dark" />
+                      <FaInstagram className="text-[26px] text-shad" />
                     </motion.a>
                     <motion.a
                       href="https://www.tiktok.com/@beiroot"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-[50px] w-[50px] rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-all shadow-md"
+                      className="h-[50px] w-[50px] rounded-full bg-secondary-500 text-shade  flex items-center justify-center transition-all"
                       whileHover={{ scale: 1.1, rotate: -5 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <FaTiktok className="text-[24px] text-dark" />
+                      <FaTiktok className="text-[24px] text-shade" />
                     </motion.a>
                   </motion.div>
                 </div>
               </div>
 
               {/* Decorative Elements */}
-              <div className="absolute bottom-0 left-0 w-full pointer-events-none">
-                <img
-                  src={svgImg.menuSvg}
-                  alt=""
-                  className="w-full opacity-20"
-                />
-              </div>
             </motion.div>
 
             {/* Floating WhatsApp Button */}
@@ -279,7 +277,7 @@ const Navbar = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
               transition={{ delay: 0.3 }}
-              className="fixed bottom-6 right-4 z-[10000] cursor-pointer"
+              className="fixed bottom-6 border border-gray-300 right-4 z-[10000] cursor-pointer"
               onClick={() =>
                 window.open("https://wa.me/2348034567890", "_blank")
               }
@@ -296,7 +294,7 @@ const Navbar = () => {
               <img
                 src={svgImg.whatsappIcon}
                 alt="WhatsApp"
-                className="w-[55px] sm:w-[60px]"
+                className="w-[55px] z-500 sm:w-[60px]"
               />
             </motion.div>
           </>
@@ -425,7 +423,7 @@ const Navbar = () => {
               whileTap={{ scale: 0.95 }}
             />
 
-            <div className="flex gap-3 sm:gap-4 items-center">
+            <div className="flex gap-3  sm:gap-4 items-center">
               <motion.button
                 onClick={() => navigate("/checkout")}
                 whileHover={{ scale: 1.05 }}
