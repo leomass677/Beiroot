@@ -48,7 +48,7 @@ const AboutUs = () => {
           {/* Stats Section */}
           <div className="relative mb-16 md:mb-20 lg:mb-24">
             <div className="bg-gray-50/35 backdrop-blur-sm rounded-lg shadow-2xs border border-gray-100 overflow-hidden relative">
-              <span className="flex -space-x-3 absolute right-8 top-8 lg:-translate-0.5 lg:left-8 ">
+              <span className="flex -space-x-3 absolute right-8 top-11 lg:-translate-4 lg:left-14 ">
                 {[
                   "bg-primary-500",
                   "bg-primary-400",
@@ -111,8 +111,9 @@ const AboutUs = () => {
               <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-3">
                 {AboutUsData.values?.title || "Our Core Values"}
               </h2>
-              <p className="text-gray-500 text-sm md:text-base max-w-[200px] mx-auto">
-                {AboutUsData.values?.subtitle || "What makes us different"}
+              <p className="text-gray-500 text-sm md:text-base mx-auto">
+                {AboutUsData.values?.s ||
+                  "The principles that make Beiroot special."}
               </p>
             </div>
 
@@ -120,7 +121,7 @@ const AboutUs = () => {
               {AboutUsData.values?.items.map((value, index) => (
                 <div
                   key={value.id || index}
-                  className="text-center group bg-gradient-to-br from-surface/10 sh adow-2xs from-20% via-gray-50/40 to-shade/25 to-78%  p-6 lg:rounded-md transition-all duration-300"
+                  className="text-center group bg-gradient-to-br from-surface/10 from-20% via-gray-50/40 to-shade/25 to-78% rounded-md border-gray-50 shadow-2xs  p-6 lg:rounded-lg transition-all duration-300"
                 >
                   <div className="  rounded-full flex items-center justify-center mx-auto mb-2">
                     <div className="p-1 bg-primary- 50 rounded-full flex items-center justify-center">
@@ -142,14 +143,11 @@ const AboutUs = () => {
             </div>
           </div>
 
-          {/* Mission & Vision Section */}
-          <div></div>
-
           {/* Team Section - Optional Enhancement */}
           {AboutUsData.team && (
             <div className="scroll-mt-20" id="team">
               <div className="text-center mb-10 md:mb-12">
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
                   {AboutUsData.team.title}
                 </h2>
                 <p className="text-gray-500 text-sm md:text-base">
@@ -159,21 +157,29 @@ const AboutUs = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                 {AboutUsData.team.members.map((member) => (
-                  <div key={member.id} className="group text-center">
-                    <div className="relative mb-4 overflow-hidden rounded-full w-28 h-28 mx-auto shadow-sm">
+                  <div
+                    key={member.id}
+                    className="text-center group bg-gradient-to-br from-gray-50/20 from-20% via-primary-50/10 to-gray-50/5 to-78%   p-6 lg:rounded-lg transition-all duration-300"
+                  >
+                    <div className="relative mb-4 overflow-hidden rounded-full w-24 h-24 mx-auto shadow-sm">
                       <img
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-1">
-                      {member.name}
-                    </h3>
-                    <p className="text-primary-500 text-sm font-medium mb-2">
-                      {member.role}
-                    </p>
-                    <p className="text-gray-600 text-sm">{member.bio}</p>
+                    <div className="flex flex-col gap-1 justify-center items-center">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-800">
+                        {member.name}
+                      </h3>
+                      <p className="text-primary-500 text-sm font-medium mb-2">
+                        {member.role}
+                      </p>
+                      <hr className="self-center  w-full border-2 text-secondary-500/50 max-w-3 border-dashed  rounded-2xl" />
+                      <p className="text-sm text-center  max-w-[80vw] md:max-w-full text-gray-600 leading-relaxed">
+                        {member.bio}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
