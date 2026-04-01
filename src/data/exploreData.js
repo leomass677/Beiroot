@@ -267,25 +267,29 @@ export const AboutUsData = {
         id: 1,
         title: "Quality First",
         description:
-          "We never compromise on the quality of our ingredients. Every dish is made with the freshest, highest-quality ingredients available.",
+          "We never compromise on quality. Only the finest ingredients make it to your plate.",
+        img: svgImg.quality,
       },
       {
         id: 2,
-        title: "Customer Satisfaction",
+        title: "Passion for Food",
         description:
-          "Your happiness is our success. We go the extra mile to ensure every customer leaves with a smile.",
+          "We love what we do, and it shows in every dish we prepare. Food is not just our business it's our passion.",
+        img: svgImg.passion,
       },
       {
         id: 3,
-        title: "Fast & Reliable",
+        title: "Fresh Ingredients",
         description:
-          "Hot, fresh food delivered quickly. We value your time and ensure prompt service without compromising quality.",
+          "All our meals are prepared fresh daily using locally sourced, quality ingredients.",
+        img: svgImg.fresh,
       },
       {
         id: 4,
-        title: "Community Love",
+        title: "Community Focus",
         description:
-          "Proudly serving Ilorin with love and dedication. We're not just a restaurant, we're part of this community.",
+          "We're proud to be part of the Ilorin community, serving our neighbors with care and dedication.",
+        img: svgImg.community,
       },
     ],
   },
