@@ -1,15 +1,170 @@
 import React from "react";
 import HeroCard from "../component/HeroCard";
+import { AboutUsData } from "../data/exploreData";
 
 const AboutUs = () => {
   return (
-    <div className="max-w-[1440px] mx-auto w-full">
-      <HeroCard
-        header={"About Beiroot"}
-        subHeader={
-          " At Beiroot, we are passionate about bringing the vibrant flavors."
-        }
-      />
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50/30">
+      <div className="max-w-[1440px] mx-auto w-full">
+        {/* Hero Section */}
+        <HeroCard
+          header={AboutUsData.hero.heading}
+          subHeader={AboutUsData.hero.subheading}
+        />
+
+        {/* Main Content */}
+        <section className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
+          {/* Our Story Section */}
+          <div className="mb-16 md:mb-20 lg:mb-24 scroll-mt-20" id="story">
+            <div className="relative">
+              {/* Decorative line */}
+              <div className="absolute left-0 top-0 w-16 h-0.5 bg-primary-500 rounded-full"></div>
+
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 md:mb-10 pt-4">
+                {AboutUsData.story.title}
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {AboutUsData.story.content.map((item, index) => (
+                <div
+                  key={item.id || index}
+                  className="group relative overflow-hidden bg-transparent rounded-xl "
+                >
+                  {/* Icon/Number */}
+
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3 mt-2 group-hover:text-primary-500 transition-colors">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats Section */}
+          <div className="relative mb-16 md:mb-20 lg:mb-24">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="flex flex-col lg:flex-row gap-8 md:gap-12 p-8 md:p-10 lg:p-12">
+                {/* Left Content */}
+                <div className="flex-1 space-y-4 md:space-y-6">
+                  <div className="inline-block">
+                    <div className=" h-0.5 bg-primary-500 rounded-full mb-4"></div>
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 leading-tight">
+                      A Snapshot of Beiroot's
+                      <span className="text-primary-500">
+                        {" "}
+                        Growth and Impact
+                      </span>
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-5l">
+                    From humble beginnings to a thriving community of food
+                    lovers, our journey is marked by milestones that reflect our
+                    commitment to quality and customer satisfaction.
+                  </p>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="flex-1">
+                  <div className="grid grid-cols-2 gap-6 md:gap-8">
+                    {AboutUsData.stats.map((stat, index) => (
+                      <div
+                        key={stat.id || index}
+                        className="text-center md:text-left group"
+                      >
+                        <div className="relative inline-block">
+                          <h4 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-600 mb-2 group-hover:scale-105 transition-transform duration-300">
+                            {stat.number}
+                          </h4>
+                          <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-500 group-hover:w-full transition-all duration-300"></div>
+                        </div>
+                        <p className="text-xs md:text-sm text-gray-500 uppercase tracking-wide mt-2">
+                          {stat.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Values Section - Enhanced */}
+          <div className="mb-16 md:mb-20 lg:mb-24 scroll-mt-20" id="values">
+            <div className="text-center mb-10 md:mb-12">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+                {AboutUsData.values?.title || "Our Core Values"}
+              </h2>
+              <p className="text-gray-500 text-sm md:text-base max-w-[200px] mx-auto">
+                {AboutUsData.values?.subtitle || "What makes us different"}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              {AboutUsData.values?.items.map((value, index) => (
+                <div
+                  key={value.id || index}
+                  className="text-center group hover:bg-gray-50/50 p-6 rounded-xl transition-all duration-300"
+                >
+                  <div className="bg-primary-50 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-100 transition-colors duration-300">
+                    <div className="w-7 h-7 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                      {index + 1}
+                    </div>
+                  </div>
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2 group-hover:text-primary-500 transition-colors">
+                    {value.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {value.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mission & Vision Section */}
+          <div></div>
+
+          {/* Team Section - Optional Enhancement */}
+          {AboutUsData.team && (
+            <div className="scroll-mt-20" id="team">
+              <div className="text-center mb-10 md:mb-12">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+                  {AboutUsData.team.title}
+                </h2>
+                <p className="text-gray-500 text-sm md:text-base">
+                  {AboutUsData.team.subtitle}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                {AboutUsData.team.members.map((member) => (
+                  <div key={member.id} className="group text-center">
+                    <div className="relative mb-4 overflow-hidden rounded-full w-28 h-28 mx-auto shadow-sm">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-primary-500 text-sm font-medium mb-2">
+                      {member.role}
+                    </p>
+                    <p className="text-gray-600 text-sm">{member.bio}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 };
