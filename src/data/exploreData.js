@@ -331,30 +331,3 @@ export const AboutUsData = {
     ],
   },
 };
-
-export const AboutUsDataArray = [
-  {
-    heading: "About Beiroot",
-    subheading: "Bringing authentic flavors to Ilorin since 2020",
-    description:
-      "At Beiroot, we're passionate about bringing you the best in fast food with a twist. Our menu features a variety of mouth-watering dishes, from loaded fries and wraps to burgers and sides, all made with fresh ingredients and bold flavors. Whether you're craving a quick bite or a full meal, Beiroot has something for everyone. Join us on this flavorful journey and experience the taste of Beiroot in Ilorin!",
-    title: "Our Story",
-    content: [
-      {
-        id: 1,
-        title: "The Beginning",
-        text: "Beiroot was founded in 2020 with a simple yet powerful mission: to bring delicious, freshly prepared meals to the people of Ilorin, Kwara State. What started as a small passion project for authentic flavors has grown into a beloved local restaurant that serves hundreds of satisfied customers daily.",
-      },
-      {
-        id: 2,
-        title: "Our Location",
-        text: "Conveniently located in the heart of Ilorin, we serve a diverse menu that beautifully combines traditional Nigerian favorites with international classics. Every dish is carefully crafted using premium quality ingredients and time-tested recipes that have been perfected over the years.",
-      },
-      {
-        id: 3,
-        title: "Our Commitment",
-        text: "Our dedicated team is committed to providing not just great food, but an exceptional dining experience from start to finish. Whether you're ordering for delivery or dining in with family and friends, we go above and beyond to make every meal memorable and every customer satisfied.",
-      },
-    ],
-  },
-];

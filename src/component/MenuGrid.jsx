@@ -17,7 +17,7 @@ const MenuGrid = ({ items = menuItems }) => {
   return (
     <div className="flex flex-col h-full">
       {/* Fixed Category Header - Sticky at top */}
-      <div className="sticky top-0 z-10 bg-white pt-4 pb-2 border-b border-gray-100">
+      <div className="sticky top-0 z-10  pt-4 pb-2  border-gra y-100">
         <div className="container-custom">
           <div className="flex overflow-x-auto gap-2 sm:gap-3 pb-2 scrollbar-hidden">
             {categories.map((category) => (

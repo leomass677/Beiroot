@@ -18,6 +18,8 @@ import passion from "./Passion.svg";
 import gallery from "../assets/gallery.svg";
 import shop from "../assets/shop.jpg";
 import beirootShop1 from "./beirootShop1.jpg";
+import smallBanner from "../assets/mobile_banner.svg";
+import largeBanner from "../assets/desktop_banner.svg";
 
 export const svgImg = {
   beiroot,
@@ -40,4 +42,6 @@ export const svgImg = {
   gallery,
   shop,
   beirootShop1,
+  smallBanner,
+  largeBanner,
 };
