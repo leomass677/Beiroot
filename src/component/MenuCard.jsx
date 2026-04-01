@@ -229,7 +229,7 @@ const MenuCard = ({ item }) => {
                   exit={{ opacity: 0, x: 10 }}
                   transition={{ duration: 0.2 }}
                   className={`
-                    flex items-center justify-center gap-1.5 px-3 py-1.5 lg:px-4 lg:py-1 rounded-md font-medium text-sm lg:text-base transition-all duration-300 min-w-[100px] lg:min-w-[134px] h-[32px] lg:h-[40px]
+                    flex items-center  justify-center gap-1.5 px-3 py-1.5 lg:px-4 lg:py-1 rounded-sm font-medium text-sm lg:text-base transition-all duration-300 min-w-[100px] lg:min-w-[134px] h-[34px] w-full max-w-[132px] lg:h-[40px]
                     ${
                       price === 0
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"
@@ -253,16 +253,16 @@ const MenuCard = ({ item }) => {
                     onClick={handleDecrement}
                     className="w-7 h-7 lg:w-8 lg:h-8 rounded-full cursor-pointer bg-gray-100 text-dark flex items-center justify-center text-lg lg:text-xl font-bold hover:bg-secondary-400 transition-colors"
                   >
-                    <IoIosRemove />
+                    <IoIosRemove className="text-xl" />
                   </button>
                   <span className="text-dark font-semibold text-base lg:text-lg min-w-[24px] lg:min-w-[32px] text-center">
                     {currentQuantity}
                   </span>
                   <button
                     onClick={handleIncrement}
-                    className="w-7 h-7 lg:w-8 lg:h-8 cursor-pointer rounded-full bg-primary-500 text-white flex items-center justify-center text-lg lg:text-xl font-bold hover:bg-primary-600 transition-colors"
+                    className=" text-2xl font-bold lg:w-8 lg:h-8 cursor-pointer rounded-full bg-primary-500 text-white flex items-center justify-center  font-bold hover:bg-primary-600 transition-colors"
                   >
-                    <IoIosAdd />
+                    <IoIosAdd className="text-xl" />
                   </button>
                 </motion.div>
               )}

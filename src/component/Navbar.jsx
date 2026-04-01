@@ -428,19 +428,22 @@ const Navbar = () => {
                 onClick={() => navigate("/checkout")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative p-1"
+                className="relative"
               >
-                <IoMdCart className="text-[22px] sm:text-[24px] text-dark" />
-                {cartCount > 0 && (
-                  <motion.span
-                    variants={cartBadgeVariants}
-                    initial="initial"
-                    animate={cartCount > 0 ? "animate" : "initial"}
-                    className="absolute -top-2 -right-1.5 font-bold border-2 border-white bg-primary-600 text-white text-[10px] sm:text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center"
-                  >
-                    {cartCount > 99 ? "99+" : cartCount}
-                  </motion.span>
-                )}
+                <span className="w-[24px] relative">
+                  {" "}
+                  <IoMdCart className="text-[24px] text-dark" />
+                  {cartCount > 0 && (
+                    <motion.span
+                      variants={cartBadgeVariants}
+                      initial="initial"
+                      animate={cartCount > 0 ? "animate" : "initial"}
+                      className="absolute right-0 -top-3  font-bold border-2 border-white bg-primary-600 text-white text-[10px] sm:text-xs rounded-full h-6 w-6 sm:h-5 sm:w-5 flex items-center justify-center"
+                    >
+                      {cartCount > 99 ? "99+" : cartCount}
+                    </motion.span>
+                  )}
+                </span>
               </motion.button>
 
               <motion.button

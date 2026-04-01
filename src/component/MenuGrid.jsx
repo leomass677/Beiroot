@@ -24,7 +24,7 @@ const MenuGrid = ({ items = menuItems }) => {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-md transition-all whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${
+                className={`px-4 sm:px-6 py-1! sm:py-2.5 rounded-md transition-all whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${
                   activeCategory === category
                     ? "bg-secondary-500 text-white shadow-md"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
