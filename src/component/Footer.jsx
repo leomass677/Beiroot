@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Skeleton from "./Skeleton";
 import {
   IoLocationOutline,
   IoMailOutline,
@@ -8,7 +9,7 @@ import {
 import { FaInstagram, FaTwitter, FaFacebookF } from "react-icons/fa";
 import { svgImg } from "../assets/svgImg";
 
-const Footer = () => {
+const Footer = ({ isLoading = false }) => {
   return (
     <footer className=" bg-gradient-to-br from-surface/60 from-20% via-gray-50/40 to-shade/75 to-78%  mt-[60px] md:mt-[80px] lg:mt-[100px] border-t border-gray-200 shadow-sm">
       <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 xl:px-12 py-8 md:py-10 lg:py-12">

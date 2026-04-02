@@ -1,12 +1,13 @@
 import React from "react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Skeleton from "./Skeleton";
 import { svgImg } from "../assets/svgImg";
 import { AboutUsData } from "../data/exploreData";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 
-const SimpleAboutUs = () => {
+const SimpleAboutUs = ({ isLoading = false }) => {
   const navigate = useNavigate();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
@@ -28,18 +29,22 @@ const SimpleAboutUs = () => {
       className="max-w-[1440px] px-4 md:px-6 lg:px-8 xl:px-12 mx-auto w-full scroll-0"
     >
       <div className="flex mx-auto flex-col gap-8 w-full max-w-[1220px]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="overflow-hidden h-fit rounded-xs lg:h-[280px]"
-        >
-          <img
-            src={svgImg.bigBeiroot}
-            alt="img"
-            className="w-full object-cover"
-          />
-        </motion.div>
+        {isLoading ? (
+          <Skeleton height="h-64 lg:h-70" className="rounded-xs" />
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6 }}
+            className="overflow-hidden h-fit rounded-xs lg:h-[280px]"
+          >
+            <img
+              src={svgImg.bigBeiroot}
+              alt="img"
+              className="w-full object-cover"
+            />
+          </motion.div>
+        )}
 
         <div className="flex flex-col gap-2 max-w-[1164px]">
           <motion.hr

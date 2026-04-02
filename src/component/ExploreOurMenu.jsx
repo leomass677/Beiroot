@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import Skeleton from "./Skeleton";
 import { exploreData } from "../data/exploreData";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
-const ExploreOurMenu = () => {
+const ExploreOurMenu = React.memo(({ isLoading = false }) => {
   const sectionRef = useRef(null);
   const carouselRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
@@ -274,60 +275,81 @@ const ExploreOurMenu = () => {
           className="px-2 md:px-8"
         >
           <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6"
-            >
-              {visibleItems.map((item, idx) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2, delay: idx * 0.03 }}
-                  whileHover={{ y: -4 }}
-                  className="group cursor-pointer"
-                >
-                  <motion.div
-                    className="flex flex-col items-center justify-center flex-1 h-full w-full bg-transparent shadow-none rounded-xl hover:-translate-y-1 transition-all duration-200 p-3 sm:p-4 md:p-5 border border-surface hover:border-primary-50"
-                    whileHover={{
-                      borderColor: "#f59e0b",
-                      transition: { duration: 0.2 },
-                    }}
+            {isLoading ? (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6"
+              >
+                {Array.from({ length: itemsPerView }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center justify-center gap-3"
                   >
-                    {/* Image Container */}
+                    <Skeleton height="h-20 w-20" circle />
+                    <Skeleton height="h-4" width="w-3/4" />
+                    <Skeleton height="h-3" width="w-1/2" />
+                  </div>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6"
+              >
+                {visibleItems.map((item, idx) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2, delay: idx * 0.03 }}
+                    whileHover={{ y: -4 }}
+                    className="group cursor-pointer"
+                  >
                     <motion.div
-                      className="relative mb-2 md:mb-3"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.2 }}
+                      className="flex flex-col items-center justify-center flex-1 h-full w-full bg-transparent shadow-none rounded-xl hover:-translate-y-1 transition-all duration-200 p-3 sm:p-4 md:p-5 border border-surface hover:border-primary-50"
+                      whileHover={{
+                        borderColor: "#f59e0b",
+                        transition: { duration: 0.2 },
+                      }}
                     >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        loading="lazy"
-                        className="object-contain w-[60px] sm:w-[70px] md:w-[80px] h-[60px] sm:h-[70px] md:h-[80px] transition-transform duration-200 group-hover:scale-105"
-                      />
-                    </motion.div>
-
-                    {/* Content */}
-                    <div className="flex flex-col gap-1 items-center text-center w-full">
-                      <motion.h6
-                        className="font-bold text-dark text-xs sm:text-sm md:text-base line-clamp-1"
-                        whileHover={{ color: "#f59e0b" }}
+                      {/* Image Container */}
+                      <motion.div
+                        className="relative mb-2 md:mb-3"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
                       >
-                        {item.title}
-                      </motion.h6>
-                      <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed line-clamp-2">
-                        {item.description}
-                      </p>
-                    </div>
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          loading="lazy"
+                          className="object-contain w-[60px] sm:w-[70px] md:w-[80px] h-[60px] sm:h-[70px] md:h-[80px] transition-transform duration-200 group-hover:scale-105"
+                        />
+                      </motion.div>
+
+                      {/* Content */}
+                      <div className="flex flex-col gap-1 items-center text-center w-full">
+                        <motion.h6
+                          className="font-bold text-dark text-xs sm:text-sm md:text-base line-clamp-1"
+                          whileHover={{ color: "#f59e0b" }}
+                        >
+                          {item.title}
+                        </motion.h6>
+                        <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed line-clamp-2">
+                          {item.description}
+                        </p>
+                      </div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              ))}
-            </motion.div>
+                ))}
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </div>
@@ -358,6 +380,8 @@ const ExploreOurMenu = () => {
       )}
     </motion.div>
   );
-};
+});
+
+ExploreOurMenu.displayName = "ExploreOurMenu";
 
 export default ExploreOurMenu;

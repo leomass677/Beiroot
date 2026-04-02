@@ -1,8 +1,10 @@
 import React from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import Skeleton from "./Skeleton";
 import { ContactInformationData } from "../data/exploreData";
 
-const ContactInformation = () => {
+const ContactInformation = ({ isLoading = false }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -44,9 +46,9 @@ const ContactInformation = () => {
 
     if (info.type === "Email") {
       // For email, use mailto protocol
-      window.location.href = `mailto:${info.value}`;
+      window.open(`mailto:${info.value}`, "_self");
     } else if (info.type === "Phone") {
-      window.location.href = `tel:${info.value.replace(/\s/g, "")}`;
+      window.open(`tel:${info.value.replace(/\s/g, "")}`, "_self");
     } else if (info.type === "WhatsApp") {
       window.open(`https://wa.me/${info.value.replace(/\s/g, "")}`, "_blank");
     } else if (info.type === "Address") {
@@ -56,6 +58,28 @@ const ContactInformation = () => {
       );
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-8 lg:gap-12">
+        <div className="flex flex-col justify-center text-center gap-4">
+          <Skeleton className="w-48 h-6 mx-auto" />
+          <Skeleton className="w-64 h-4 mx-auto" />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className="flex items-start justify-start gap-2">
+              <Skeleton className="w-11 h-11 rounded" />
+              <div className="flex flex-col gap-1.5">
+                <Skeleton className="w-16 h-4" />
+                <Skeleton className="w-24 h-3" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div

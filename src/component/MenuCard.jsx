@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartProvider";
-import { IoMdCart } from "react-icons/io";
-import { IoIosAdd } from "react-icons/io";
-import { IoIosRemove } from "react-icons/io";
+import { IoMdCart, IoIosAdd, IoIosRemove } from "react-icons/io";
+import { FaHamburger, FaPizzaSlice } from "react-icons/fa";
+import { MdOutlineFastfood } from "react-icons/md";
+import { GiChickenOven, GiSandwich, GiFrenchFries } from "react-icons/gi";
 
-const MenuCard = ({ item }) => {
+// Memoize MenuCard to prevent unnecessary re-renders when parent list updates
+const MenuCard = React.memo(({ item }) => {
   const { cart, addItem, updateQuantity, removeItem, formatCurrency } =
     useCart();
   const [selectedSize, setSelectedSize] = useState(null);
@@ -86,222 +88,179 @@ const MenuCard = ({ item }) => {
     medium: "Medium",
   };
 
+  // Check if item has limited edition tag
+  const isLimitedEdition =
+    item.tags?.includes("Limited Edition") || item.limitedEdition;
+
+  // Get category icon
+  const getCategoryIcon = () => {
+    const iconProps = { className: "text-3xl md:text-4xl text-primary-400" };
+    switch (item.category) {
+      case "Burgers":
+        return <FaHamburger {...iconProps} />;
+      case "Wraps":
+        return <GiChickenOven {...iconProps} />;
+      case "Irish Potato Loaded Fries":
+      case "Sweet Potato Loaded Fries":
+        return <GiFrenchFries {...iconProps} />;
+      case "Sub Sandwiches":
+        return <GiSandwich {...iconProps} />;
+      case "Pizza":
+        return <FaPizzaSlice {...iconProps} />;
+      default:
+        return <MdOutlineFastfood {...iconProps} />;
+    }
+  };
+
   return (
     <motion.div
-      className="group relative bg-white rounded-lg overflow-hidden shadow-xs hover:shadow-sm transition-all duration-300 w-full"
+      className="group relative bg-[#FBFBF8] rounded-md border border-[#FEE0CD] overflow-hidden flex  shadow-xs hover:shadow-sm transition-all duration-300 w-full max-w-[398px] mx-auto"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Mobile/Tablet: Row Layout, Desktop: Column Layout */}
-      <div className="flex flex-row lg:flex-col h-full ">
-        {/* Image Section - Mobile: 130px, Desktop: Full width */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 lg:max-h-[140px]  to-secondary-50 w-[130px] lg:w-full flex-shrink-0 lg:aspect-square">
+      <div className="flex flex-row flex-1 h-full  lg:h-fit max-h-[200px]">
+        {/* Image Section - Fixed width for all screens */}
+        <div
+          className="relative flex-shrink-0 overflow-hidden w-full max-w-[120px] min-h-[170px]  object-cover"
+          style={{
+            background:
+              "linear-gradient(97.17deg, rgba(255, 237, 211, 0.15) 0%, rgba(255, 231, 208, 0.5) 46.81%, rgba(255, 237, 211, 0.25) 93.62%)",
+          }}
+        >
           {item.image && !imageError ? (
             <motion.img
               src={item.image}
               alt={item.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full  object-cover"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
               onError={() => setImageError(true)}
             />
           ) : (
-            <div className="w-full h-full min-h-[130px] lg:min-h-[200px] flex items-center justify-center bg-gradient-to-br from-primary-100 to-secondary-100">
-              <span className="text-3xl lg:text-5xl">
-                {item.category === "Burgers" && "🍔"}
-                {item.category === "Wraps" && "🌯"}
-                {item.category === "Irish Potato Loaded Fries" && "🍟"}
-                {item.category === "Sweet Potato Loaded Fries" && "🍠"}
-                {item.category === "Sub Sandwiches" && "🥪"}
-                {item.category === "Sides" && "🍟"}
-                {item.category === "Extras" && "✨"}
-                {item.category === "Dips" && "🥫"}
-                {item.category === "Combos" && "🍱"}
-                {!item.category && "🍽️"}
-              </span>
+            <div className="w-full h-full flex items-center justify-center">
+              {getCategoryIcon()}
             </div>
           )}
-
-          {/* Best Seller Badge */}
-          {item.bestSale && (
-            <div className="absolute top-2 right-2 z-10">
-              <span className="bg-gradient-primary   text-shade text-[10px] lg:text-xs font-semibold px-2 py-2 lg:px-3  rounded shadow-lg">
-                Best Seller
-              </span>
-            </div>
-          )}
-
-          {/* Added to Cart Animation */}
-          <AnimatePresence>
-            {addedToCart && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                className="absolute inset-0 bg-black/50 flex items-center justify-center z-20"
-              >
-                <div className="bg-white rounded-full px-2 py-1 lg:px-4 lg:py-2 flex items-center gap-1">
-                  <svg
-                    className="w-3 h-3 lg:w-4 lg:h-4 text-green-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-[10px] lg:text-xs font-semibold text-dark">
-                    Added!
-                  </span>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
-        {/* Content Section */}
-        <div className="flex-1 p-3 lg:p-4 flex flex-col justify-between">
-          <div>
-            {/* Header */}
-            <div className="mb-2">
-              <h6 className="text-dark font-semibold text-sm md:text-base lg:text-[16px] line-clamp-2 leading-tight">
-                {item.name}
-              </h6>
-              {item.category && (
-                <p className="text-gray-500 text-xs lg:text-sm font-medium mt-0.5">
-                  {item.category}
-                </p>
-              )}
-            </div>
-
-            {/* Size Selection - Flex Row with gap-2 */}
-            {availableSizes.length > 0 && (
-              <div className="flex flex-row gap-2 flex-wrap">
-                {availableSizes.map((size) => (
-                  <span
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`
-                      px-[14px]  py-[4px]    rounded-sm text-xs lg:text-sm font-medium li cursor-pointer transition-all duration-200 border-[1.5px]
-                      ${
-                        selectedSize === size
-                          ? "text-primary-500  border-primary-500 bg-transparent"
-                          : "text-secondary-400 border-transparent hover:text-primary-500 hover:border-primary-100"
-                      }
-                    `}
-                  >
-                    {sizeOptions[size] ||
-                      size.charAt(0).toUpperCase() + size.slice(1)}
-                  </span>
-                ))}
-              </div>
+        {/* Content Section - Flexible width */}
+        <div className="flex-1  flex flex-col p-3 w-full h-full justify-between items-end  gap-3 h-full ">
+          {/* Title and Category */}
+          <div className="flex flex-col items-start gap-2 w-full">
+            <h6 className="font-medium font-roboto text-base leading-relaxed text-dark  w-full line-clamp-2">
+              {item.name}
+            </h6>
+            {item.category && (
+              <p className="font-medium font-roboto text-sm leading-[150%] text-[#636363] w-full truncate">
+                {item.category}
+              </p>
             )}
           </div>
 
-          {/* Price and Add to Cart - Same Row */}
-          <div className="flex items-center justify-between gap-2 mt-2 lg:mt-3">
-            <motion.div
-              key={totalPrice}
-              initial={{ scale: 1.1, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              <span className="text-dark font-semibold  text-base">
-                {formatCurrency(totalPrice)}
-              </span>
-            </motion.div>
+          {/* Size Selection and Price/Add to Cart */}
+          <div className="flex flex-col items-start  self-end  gap-3 w-full">
+            {/* Size Selection */}
+            {availableSizes.length > 0 && (
+              <div className="flex flex-row items-center gap-[14px] h-[25px]">
+                {availableSizes.map((size) => {
+                  const sizeName =
+                    sizeOptions[size] ||
+                    size.charAt(0).toUpperCase() + size.slice(1);
+                  const isSelected = selectedSize === size;
 
-            <AnimatePresence mode="wait">
-              {!isInCart ? (
-                <motion.button
-                  key="add-to-cart"
-                  onClick={handleAddToCart}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  disabled={price === 0}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{ duration: 0.2 }}
-                  className={`
-                    flex items-center  justify-center gap-1.5 px-3 py-1.5 lg:px-4 lg:py-1 rounded-sm font-medium text-sm lg:text-base transition-all duration-300 min-w-[100px] lg:min-w-[134px] h-[34px] w-full max-w-[132px] lg:h-[40px]
-                    ${
-                      price === 0
-                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        : "bg-gradient-primary text-shade hover:shadow-md"
-                    }
-                  `}
-                >
-                  <IoMdCart className="text-sm lg:text-base" />
-                  <span>Add to Cart</span>
-                </motion.button>
-              ) : (
-                <motion.div
-                  key="quantity-selector"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center gap-2  min-w-[100px] lg:min-w-[120px] justify-end"
-                >
-                  <button
-                    onClick={handleDecrement}
-                    className="w-7 h-7 lg:w-8 lg:h-8 rounded-full cursor-pointer bg-gray-100 text-dark flex items-center justify-center text-lg lg:text-xl font-bold hover:bg-secondary-400 transition-colors"
-                  >
-                    <IoIosRemove className="text-xl" />
-                  </button>
-                  <span className="text-dark font-semibold text-base lg:text-lg min-w-[24px] lg:min-w-[32px] text-center">
-                    {currentQuantity}
-                  </span>
-                  <button
-                    onClick={handleIncrement}
-                    className=" text-2xl font-bold lg:w-8 lg:h-8 cursor-pointer rounded-full bg-primary-500 text-white flex items-center justify-center  font-bold hover:bg-primary-600 transition-colors"
-                  >
-                    <IoIosAdd className="text-xl" />
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Includes Section for Combos */}
-          {item.includes && item.includes.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="mt-2 pt-2 lg:mt-3 lg:pt-3 border-t border-gray-100"
-            >
-              <p className="text-[10px] lg:text-xs text-gray-500 mb-0.5">
-                Includes:
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {item.includes.slice(0, 2).map((include, index) => (
-                  <span
-                    key={index}
-                    className="text-[10px] lg:text-xs bg-gray-50 text-gray-600 px-1.5 py-0.5 lg:px-2 lg:py-1 rounded"
-                  >
-                    {include.length > 20
-                      ? include.substring(0, 17) + "..."
-                      : include}
-                  </span>
-                ))}
-                {item.includes.length > 2 && (
-                  <span className="text-[10px] lg:text-xs bg-gray-50 text-gray-600 px-1.5 py-0.5 lg:px-2 lg:py-1 rounded">
-                    +{item.includes.length - 2}
-                  </span>
-                )}
+                  return (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`cursor-pointer transition-all duration-200 px-3  py-0.5 rounded ${isSelected ? " bg-secondary-50 shadow-2xs rounded-sm" : ""}  `}
+                    >
+                      <b
+                        className={`font-medium font-roboto text-sm whitespace-nowrap ${
+                          isSelected ? "text-primary-500" : "text-secondary-400"
+                        }`}
+                      >
+                        {sizeName}
+                      </b>
+                    </button>
+                  );
+                })}
               </div>
-            </motion.div>
-          )}
+            )}
+
+            {/* Price and Add to Cart */}
+            <div className="flex flex-row justify-between items-center w-full h-8">
+              <motion.div
+                key={totalPrice}
+                initial={{ scale: 1.1, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                className="flex gap-4"
+              >
+                <span className="font-bold font-roboto text-lg leading-[150%] text-[#040404]">
+                  {formatCurrency(totalPrice)}
+                </span>
+              </motion.div>
+
+              <AnimatePresence mode="wait">
+                {!isInCart ? (
+                  <motion.button
+                    key="add-to-cart"
+                    onClick={handleAddToCart}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    disabled={price === 0}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className={`flex items-center justify-center gap-1 cursor-pointer w-full text-sm max-w-[124px] font-medium h-8 rounded transition-all ${
+                      price === 0
+                        ? "bg-gray-300"
+                        : "bg-[#D15202] hover:bg-[#b84802]"
+                    }`}
+                  >
+                    <span className="font-semibold font-roboto text-sm leading-[150%] text-[#F7F7F2] whitespace-nowrap">
+                      Add to Cart
+                    </span>
+                    <IoMdCart className="w-5 h-5 text-[#F7F7F2]" />
+                  </motion.button>
+                ) : (
+                  <motion.div
+                    key="quantity-selector"
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center gap-2"
+                  >
+                    <button
+                      onClick={handleDecrement}
+                      className="w-7 h-7 rounded-full bg-gray-100 text-dark flex items-center justify-center text-lg font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                    >
+                      <IoIosRemove className="text-xl" />
+                    </button>
+                    <span className="text-dark font-semibold text-base min-w-[24px] text-center">
+                      {currentQuantity}
+                    </span>
+                    <button
+                      onClick={handleIncrement}
+                      className="w-7 h-7 rounded-full bg-[#D15202] text-white flex items-center justify-center text-xl font-bold hover:bg-[#b84802] transition-colors cursor-pointer"
+                    >
+                      <IoIosAdd className="text-xl" />
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>
   );
-};
+});
+
+// Display name for debugging
+MenuCard.displayName = "MenuCard";
 
 export default MenuCard;

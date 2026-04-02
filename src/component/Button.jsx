@@ -1,5 +1,6 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import Skeleton from "./Skeleton";
 
 const Button = ({
   text,
@@ -14,6 +15,7 @@ const Button = ({
   to: linkTo,
   scrollTarget,
   rounded = "md",
+  isLoading = false,
 }) => {
   const baseStyles =
     "inline-flex items-center cursor-pointer justify-center rounded font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition";
@@ -53,7 +55,7 @@ const Button = ({
   const content = (
     <span>
       {Icon && iconPosition === "left" && <Icon className="" />}
-      {text}
+      {isLoading ? <Skeleton className="w-16 h-4" /> : text}
       {Icon && iconPosition === "right" && <Icon className="" />}
     </span>
   );

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
+import Skeleton from "./Skeleton";
 import { heroVidio } from "../assets/video";
 import { useNavigate } from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({ isLoading = false }) => {
   const navigate = useNavigate();
   const sectionRef = useRef(null);
   const videoRef = useRef(null);

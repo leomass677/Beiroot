@@ -1,10 +1,11 @@
-﻿const fs=require('fs');
-const parser=require('@babel/parser');
-const code=fs.readFileSync('src/component/Navbar.jsx','utf8');
+﻿/* eslint-disable no-undef */
+const fs = require("fs");
+const parser = require("@babel/parser");
+const code = fs.readFileSync("src/component/Navbar.jsx", "utf8");
 try {
-  parser.parse(code,{sourceType:'module',plugins:['jsx']});
-  console.log('ok');
-} catch(e) {
+  parser.parse(code, { sourceType: "module", plugins: ["jsx"] });
+  console.log("ok");
+} catch (e) {
   console.error(e.message);
   process.exit(1);
 }

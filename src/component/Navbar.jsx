@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { svgImg } from "../assets/svgImg";
+import Skeleton from "./Skeleton";
 import { IoMdCart } from "react-icons/io";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import { RiArrowRightWideFill } from "react-icons/ri";
@@ -10,11 +11,16 @@ import { FaInstagram, FaTiktok } from "react-icons/fa";
 import { useCart } from "../context/CartProvider";
 import { IoCloseSharp } from "react-icons/io5";
 
-const Navbar = () => {
+const Navbar = ({ isLoading = false }) => {
   const navigate = useNavigate();
   const { formatCurrency, cartCount, cartTotal } = useCart();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // Scroll to top helper function
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -143,7 +149,7 @@ const Navbar = () => {
               exit="exit"
               className="fixed top-0 right-0 h-full w-full bg-white shadow-2xl z-[10000] overflow-y-auto"
             >
-              <div className="flex flex-col  min-h-full pt-4 pb-8">
+              <div className="flex flex-col min-h-full pt-4 pb-8">
                 {/* Header with Logo and Close Button */}
                 <div className="flex justify-between items-center px-6 pb-6 border-b border-gray-200">
                   <motion.img
@@ -152,6 +158,7 @@ const Navbar = () => {
                     onClick={() => {
                       setIsMobileOpen(false);
                       navigate("/");
+                      scrollToTop();
                     }}
                     className="h-[45px] sm:h-[50px] object-cover cursor-pointer"
                     whileHover={{ scale: 1.05 }}
@@ -181,7 +188,10 @@ const Navbar = () => {
                       >
                         <NavLink
                           to={item.path}
-                          onClick={() => setIsMobileOpen(false)}
+                          onClick={() => {
+                            setIsMobileOpen(false);
+                            scrollToTop();
+                          }}
                           className={({ isActive }) =>
                             twMerge(
                               "text-dark text-[20px] sm:text-[24px] flex justify-between items-center py-5 font-semibold w-full hover:text-primary-500 transition-colors duration-300",
@@ -202,13 +212,14 @@ const Navbar = () => {
                     onClick={() => {
                       setIsMobileOpen(false);
                       navigate("/menu");
+                      scrollToTop();
                       setTimeout(() => {
                         const element = document.getElementById("order-now");
                         if (element)
                           element.scrollIntoView({ behavior: "smooth" });
                       }, 200);
                     }}
-                    className="bg-gradient-primary cursor-pointer text-white px-6 h-[60px] sm:h-[65px] w-full rounded-md flex items-center justify-center text-lg font-medium  transition-shadow mt-4"
+                    className="bg-gradient-primary cursor-pointer text-white px-6 h-[60px] sm:h-[65px] w-full rounded-md flex items-center justify-center text-lg font-medium transition-shadow mt-4"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -221,6 +232,7 @@ const Navbar = () => {
                     onClick={() => {
                       setIsMobileOpen(false);
                       navigate("/checkout");
+                      scrollToTop();
                     }}
                     className="w-full bg-gray-100 hover:bg-gray-200 transition-all h-[55px] sm:h-[60px] flex items-center justify-center rounded-md border border-gray-200"
                     whileHover={{ scale: 1.02 }}
@@ -248,17 +260,17 @@ const Navbar = () => {
                       href="https://www.instagram.com/beiroot/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-[50px] w-[50px] rounded-full bg-secondary-500 text-shade  flex items-center justify-center transition-all"
+                      className="h-[50px] w-[50px] rounded-full bg-secondary-500 text-shade flex items-center justify-center transition-all"
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <FaInstagram className="text-[26px] text-shad" />
+                      <FaInstagram className="text-[26px] text-shade" />
                     </motion.a>
                     <motion.a
                       href="https://www.tiktok.com/@beiroot"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="h-[50px] w-[50px] rounded-full bg-secondary-500 text-shade  flex items-center justify-center transition-all"
+                      className="h-[50px] w-[50px] rounded-full bg-secondary-500 text-shade flex items-center justify-center transition-all"
                       whileHover={{ scale: 1.1, rotate: -5 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -267,8 +279,6 @@ const Navbar = () => {
                   </motion.div>
                 </div>
               </div>
-
-              {/* Decorative Elements */}
             </motion.div>
 
             {/* Floating WhatsApp Button */}
@@ -277,7 +287,7 @@ const Navbar = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
               transition={{ delay: 0.3 }}
-              className="fixed bottom-6 border border-gray-300 right-4 z-[10000] cursor-pointer"
+              className="fixed bottom-6 border border-gray-300 right-4 z-[10000] cursor-pointer rounded-full bg-white"
               onClick={() =>
                 window.open("https://wa.me/2348034567890", "_blank")
               }
@@ -318,7 +328,10 @@ const Navbar = () => {
           <motion.img
             src={svgImg.beiroot}
             alt="beiroot"
-            onClick={() => navigate("/")}
+            onClick={() => {
+              navigate("/");
+              scrollToTop();
+            }}
             className="h-[50px] sm:h-[55px] md:h-[65px] cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -335,6 +348,7 @@ const Navbar = () => {
               >
                 <NavLink
                   to={item.path}
+                  onClick={scrollToTop}
                   className={({ isActive }) =>
                     twMerge(
                       "relative text-dark text-[16px] lg:text-[18px] font-semibold transition-all duration-300 group",
@@ -362,7 +376,10 @@ const Navbar = () => {
               whileHover="hover"
               whileTap="tap"
               variants={buttonVariants}
-              onClick={() => navigate("/checkout")}
+              onClick={() => {
+                navigate("/checkout");
+                scrollToTop();
+              }}
             >
               <div className="relative flex items-center gap-2">
                 <span className="hidden sm:inline text-dark font-medium">
@@ -391,6 +408,7 @@ const Navbar = () => {
             <motion.button
               onClick={() => {
                 navigate("/menu");
+                scrollToTop();
                 setTimeout(() => {
                   const element = document.getElementById("order-now");
                   if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -417,28 +435,33 @@ const Navbar = () => {
             <motion.img
               src={svgImg.beiroot}
               alt="beiroot"
-              onClick={() => navigate("/")}
+              onClick={() => {
+                navigate("/");
+                scrollToTop();
+              }}
               className="h-[35px] sm:h-[40px] object-cover cursor-pointer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             />
 
-            <div className="flex gap-3  sm:gap-4 items-center">
+            <div className="flex gap-3 sm:gap-4 items-center">
               <motion.button
-                onClick={() => navigate("/checkout")}
+                onClick={() => {
+                  navigate("/checkout");
+                  scrollToTop();
+                }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="relative"
               >
                 <span className="w-[24px] relative">
-                  {" "}
                   <IoMdCart className="text-[24px] text-dark" />
                   {cartCount > 0 && (
                     <motion.span
                       variants={cartBadgeVariants}
                       initial="initial"
                       animate={cartCount > 0 ? "animate" : "initial"}
-                      className="absolute right-0 -top-3  font-bold border-2 border-white bg-primary-600 text-white text-[10px] sm:text-xs rounded-full h-6 w-6 sm:h-5 sm:w-5 flex items-center justify-center"
+                      className="absolute right-0 -top-3 font-bold border-2 border-white bg-primary-600 text-white text-[10px] sm:text-xs rounded-full h-6 w-6 sm:h-5 sm:w-5 flex items-center justify-center"
                     >
                       {cartCount > 99 ? "99+" : cartCount}
                     </motion.span>

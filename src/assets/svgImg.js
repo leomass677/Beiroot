@@ -26,6 +26,10 @@ import affordablePrices from "./AffordablePrices.svg";
 import covenientLocation from "./convenientLocation.svg";
 import bigBeiroot from "./bigBeiroot.svg";
 import mobileGallery from "./MobileGallery.svg";
+import sliderMobile1 from "./Silder_mobile_component_1.svg";
+import sliderMobile2 from "./Silder_mobile_component_2.svg";
+import sliderTablet1 from "./Silder_tablet_component_1.svg";
+import sliderTablet2 from "./Silder_tablet_component_2.svg";
 
 export const svgImg = {
   beiroot,
@@ -56,4 +60,8 @@ export const svgImg = {
   affordablePrices,
   bigBeiroot,
   mobileGallery,
+  sliderMobile1,
+  sliderMobile2,
+  sliderTablet1,
+  sliderTablet2,
 };

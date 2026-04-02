@@ -3,32 +3,55 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  // Initialize cart from localStorage with better error handling
   const [cart, setCart] = useState([]);
   const [currency, setCurrency] = useState("NGN");
   const [cartTotal, setCartTotal] = useState(0);
   const [cartCount, setCartCount] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load cart from localStorage on mount
+  // Load cart from localStorage on mount - RUNS ONLY ONCE
   useEffect(() => {
-    const savedCart = localStorage.getItem("beirootCart");
-    if (savedCart) {
-      try {
-        setCart(JSON.parse(savedCart));
-      } catch (error) {
-        console.error("Failed to load cart:", error);
+    try {
+      const savedCart = localStorage.getItem("beirootCart");
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        if (Array.isArray(parsedCart) && parsedCart.length > 0) {
+          setCart(parsedCart);
+          if (process.env.NODE_ENV === "development") {
+            console.log(
+              "Cart loaded from localStorage:",
+              parsedCart.length,
+              "items",
+            );
+          }
+        }
+      }
+    } catch (error) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("Failed to load cart from localStorage:", error);
       }
     }
+    setIsLoaded(true);
   }, []);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("beirootCart", JSON.stringify(cart));
-    updateCartTotals();
-  }, [cart]);
+    if (isLoaded) {
+      localStorage.setItem("beirootCart", JSON.stringify(cart));
+      updateCartTotals();
+      if (process.env.NODE_ENV === "development") {
+        console.log("Cart saved to localStorage:", cart.length, "items");
+      }
+    }
+  }, [cart, isLoaded]);
 
   // Update cart totals
   const updateCartTotals = () => {
-    const total = cart.reduce((sum, item) => sum + item.total, 0);
+    const total = cart.reduce(
+      (sum, item) => sum + (item.total || item.price * item.quantity),
+      0,
+    );
     const count = cart.reduce((sum, item) => sum + item.quantity, 0);
     setCartTotal(total);
     setCartCount(count);
@@ -55,8 +78,15 @@ export const CartProvider = ({ children }) => {
         );
       }
 
-      // Add new item
-      return [...prev, { ...item, total: item.price * item.quantity }];
+      // Add new item with image
+      return [
+        ...prev,
+        {
+          ...item,
+          total: item.price * item.quantity,
+          image: item.image || "/placeholder-food.png",
+        },
+      ];
     });
   };
 
@@ -92,6 +122,7 @@ export const CartProvider = ({ children }) => {
   // Clear entire cart
   const clearCart = () => {
     setCart([]);
+    localStorage.removeItem("beirootCart");
   };
 
   // Format currency
@@ -120,7 +151,7 @@ export const CartProvider = ({ children }) => {
     };
   };
 
-  // Calculate delivery fee based on location (example)
+  // Calculate delivery fee based on location
   const getDeliveryFee = (location = "standard") => {
     const deliveryFees = {
       standard: 1500,
@@ -149,6 +180,7 @@ export const CartProvider = ({ children }) => {
     getCartSummary,
     getDeliveryFee,
     getTotalWithDelivery,
+    isLoaded,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

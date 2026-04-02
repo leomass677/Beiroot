@@ -1,12 +1,24 @@
-import React from "react";
-import Home from "../Pages/Home";
-import AboutUs from "../Pages/AboutUs";
-import Menu from "../Pages/Menu";
-import ContactUs from "../Pages/ContactUs";
-import Checkout from "../Pages/Checkout";
+import React, { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "../component/Layout";
 import ErrorPage from "../Pages/ErrorPage";
+import { CardSkeleton } from "../component/Skeleton";
+
+// Lazy load heavy pages for better code splitting
+const Home = React.lazy(() => import("../Pages/Home"));
+const Menu = React.lazy(() => import("../Pages/Menu"));
+const Checkout = React.lazy(() => import("../Pages/Checkout"));
+const ContactUs = React.lazy(() => import("../Pages/ContactUs"));
+const AboutUs = React.lazy(() => import("../Pages/AboutUs"));
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="w-full h-screen flex items-center justify-center">
+    <div className="space-y-4">
+      <CardSkeleton />
+    </div>
+  </div>
+);
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -15,11 +27,46 @@ const Router = () => {
       element: <Layout />,
       errorElement: <ErrorPage />,
       children: [
-        { path: "/", element: <Home /> },
-        { path: "/menu", element: <Menu /> },
-        { path: "/checkout", element: <Checkout /> },
-        { path: "/contact", element: <ContactUs /> },
-        { path: "/about", element: <AboutUs /> },
+        {
+          path: "/",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Home />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/menu",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Menu />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/checkout",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <Checkout />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/contact",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <ContactUs />
+            </Suspense>
+          ),
+        },
+        {
+          path: "/about",
+          element: (
+            <Suspense fallback={<PageLoader />}>
+              <AboutUs />
+            </Suspense>
+          ),
+        },
       ],
     },
   ]);

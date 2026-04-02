@@ -1,9 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Skeleton from "./Skeleton";
 import { svgImg } from "../assets/svgImg";
 import { WhyChooseBeirootArray } from "../data/exploreData";
 
-const WhyChooseBeiroot = () => {
+const WhyChooseBeiroot = ({ isLoading = false }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}

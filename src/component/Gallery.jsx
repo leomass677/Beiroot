@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Skeleton from "./Skeleton";
 import { svgImg } from "../assets/svgImg";
 
-const Gallery = () => {
+const Gallery = React.memo(({ isLoading = false }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -33,39 +35,56 @@ const Gallery = () => {
       </div>
 
       <div className="w-full justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="hidden md:block w-full object-cover overflow-hidden mx-auto md:px-4 max-w-[800px] xl:max-w-[1000px]"
-        >
-          <motion.img
-            src={svgImg.gallery}
-            alt="gallary"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.4 }}
-          />
-        </motion.div>
+        {isLoading ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="w-full mx-auto md:px-4 max-w-[800px] xl:max-w-[1000px]"
+          >
+            <Skeleton height="h-96" className="rounded-lg" />
+          </motion.div>
+        ) : (
+          <>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="hidden md:block w-full object-cover overflow-hidden mx-auto md:px-4 max-w-[800px] xl:max-w-[1000px]"
+            >
+              <motion.img
+                src={svgImg.gallery}
+                alt="gallary"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.4 }}
+                onLoad={() => setImageLoaded(true)}
+              />
+            </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="md:hidden flex justify-center items-center w-full mx-auto"
-        >
-          <motion.img
-            src={svgImg.mobileGallery}
-            alt="gallary"
-            className="object-cover"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.4 }}
-          />
-        </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="md:hidden flex justify-center items-center w-full mx-auto"
+            >
+              <motion.img
+                src={svgImg.mobileGallery}
+                alt="gallary"
+                className="object-cover"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.4 }}
+                onLoad={() => setImageLoaded(true)}
+              />
+            </motion.div>
+          </>
+        )}
       </div>
     </motion.div>
   );
-};
+});
+
+Gallery.displayName = "Gallery";
 
 export default Gallery;

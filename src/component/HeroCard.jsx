@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Skeleton from "./Skeleton";
 import { svgImg } from "../assets/svgImg";
 
-const HeroCard = ({ header, subHeader }) => {
+const HeroCard = ({ header, subHeader, isLoading = false }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
