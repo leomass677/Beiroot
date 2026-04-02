@@ -3,6 +3,7 @@ import Hero from "../component/Hero";
 import ExploreOurMenu from "../component/ExploreOurMenu";
 import Gallery from "../component/Gallery";
 import WhyChooseBeiroot from "../component/WhyChooseBeiroot";
+import SimpleAboutUs from "../component/SimpleAboutUs";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <ExploreOurMenu />
       <Gallery />
       <WhyChooseBeiroot />
+      <SimpleAboutUs />
     </div>
   );
 };

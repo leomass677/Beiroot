@@ -20,6 +20,11 @@ import shop from "../assets/shop.jpg";
 import beirootShop1 from "./beirootShop1.jpg";
 import smallBanner from "../assets/mobile_banner.svg";
 import largeBanner from "../assets/desktop_banner.svg";
+import fastPreparedMeal from "../assets/FreshlyPreparedMeals.svg";
+import fastEasyOrdering from "../assets/FastEasyOrdering.svg";
+import affordablePrices from "./AffordablePrices.svg";
+import covenientLocation from "./convenientLocation.svg";
+import bigBeiroot from "./bigBeiroot.svg";
 
 export const svgImg = {
   beiroot,
@@ -44,4 +49,9 @@ export const svgImg = {
   beirootShop1,
   smallBanner,
   largeBanner,
+  fastEasyOrdering,
+  fastPreparedMeal,
+  covenientLocation,
+  affordablePrices,
+  bigBeiroot,
 };

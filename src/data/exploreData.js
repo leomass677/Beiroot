@@ -335,3 +335,34 @@ export const AboutUsData = {
     ],
   },
 };
+
+export const WhyChooseBeirootArray = [
+  {
+    id: 1,
+    name: "Freshly Prepared Meals",
+    description:
+      "Our meals are made with carefully selected ingredients to deliver great taste and satisfying portions every time.",
+    image: svgImg.fastPreparedMeal,
+  },
+  {
+    id: 2,
+    name: "Fast & Easy Ordering",
+    description:
+      "Order your favorite food quickly through our simple WhatsApp ordering system and enjoy a smooth experience.",
+    image: svgImg.fastEasyOrdering,
+  },
+  {
+    id: 3,
+    name: "Affordable Prices",
+    description:
+      "Delicious food at prices that everyone can enjoy, perfect for students, families, and food lovers.",
+    image: svgImg.affordablePrices,
+  },
+  {
+    id: 4,
+    name: "Convenient Location",
+    description:
+      "Proudly serving the Ilorin community with tasty meals, snacks, and refreshing drinks.",
+    image: svgImg.covenientLocation,
+  },
+];

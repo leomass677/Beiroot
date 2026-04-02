@@ -13,7 +13,11 @@ const AboutUs = () => {
         />
 
         {/* Main Content */}
-        <section className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20">
+        <section
+          id="aboutUs"
+          style={{ scrollMarginTop: "80px" }}
+          className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-20"
+        >
           {/* Our Story Section */}
           <div className="mb-16 md:mb-20 lg:mb-24 scroll-mt-20" id="story">
             <div className="relative">
@@ -25,11 +29,15 @@ const AboutUs = () => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-6 lg:items-start lg:gap-x-12">
               {AboutUsData.story.content.map((item, index) => (
                 <div
                   key={item.id || index}
-                  className="group relative flex flex-col gap-2 lg:gap-3 overflow-hidden bg-transparent py-1 "
+                  className={`group relative flex flex-col gap-1.5 lg:gap-3 overflow-hidden bg-transparent py-1 ${
+                    index === AboutUsData.story.content.length - 1 &&
+                    AboutUsData.story.content.length % 2 !== 0 &&
+                    "lg:col-span-2"
+                  }`}
                 >
                   {/* Icon/Number */}
 
@@ -37,7 +45,7 @@ const AboutUs = () => {
                     {item.title}
                   </h3>
 
-                  <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                  <p className="text-sm md:text-base  text-justify break-word  lg:wrap-break-word text-gray-600 leading-relaxed">
                     {item.text}
                   </p>
                 </div>
@@ -73,7 +81,7 @@ const AboutUs = () => {
                       </span>
                     </h3>
                   </div>
-                  <p className="text-gray-600 text-sm md:text-base leading-relaxed pr-1 md:pr-0">
+                  <p className="text-gray-600 text-justify lg:text-start break-words  text-sm md:text-base leading-relaxed pr-1 md:pr-0">
                     From humble beginnings to a thriving community of food
                     lovers, our journey is marked by milestones that reflect our
                     commitment to quality and customer satisfaction.

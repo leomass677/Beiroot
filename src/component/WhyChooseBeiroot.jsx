@@ -1,5 +1,6 @@
 import React from "react";
 import { svgImg } from "../assets/svgImg";
+import { WhyChooseBeirootArray } from "../data/exploreData";
 
 const WhyChooseBeiroot = () => {
   return (
@@ -13,7 +14,7 @@ const WhyChooseBeiroot = () => {
           Beiroot making it easy to satisfy your cravings anytime.
         </p>
       </div>
-      <div className="flex lg:flex-col">
+      <div className="flex flex-col lg:items-center justify-between lg:flex-row gap-8">
         <div
           className="w-full max-w-[458px] overflow-hidden   justify-center
         "
@@ -25,7 +26,33 @@ const WhyChooseBeiroot = () => {
           />
         </div>
         {/*  */}
-        <div>text</div>
+
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative">
+            <hr className=" hidden lg:block w-[3px] h-full bg-gray-50 absolute left-1/2 top-0 rounded-2xl" />
+            <span className="hidden lg:block bg-gray-50 w-5 h-5 rounded-2xl absolute left-1/2 bottom-13 -translate-x-[10px] -translate-y-[100px]"></span>
+            <span className="hidden lg:block bg-gray-50 w-5 h-5 rounded-2xl absolute left-1/2 bottom-1/2 -translate-x-[10px] -translate-y-[95px]"></span>
+            <div className="hidden lg:block"></div>
+            {WhyChooseBeirootArray.map((item) => (
+              <div
+                key={item.id}
+                className="flex gap-2 flex-1 lg:border-b-2 lg:pb-6 border-gray-50"
+              >
+                <div className="min-w-[44px] w-[44px] h-[44px] min-h-[44px] ">
+                  <img
+                    src={item?.image}
+                    alt={item?.name}
+                    className="w-[43px] h-auto object-cover"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <h6 className="text-base font-medium">{item?.name}</h6>
+                  <p className="text-sm leading-snug">{item?.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
