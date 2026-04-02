@@ -48,7 +48,7 @@ const AboutUs = () => {
           {/* Stats Section */}
           <div className="relative mb-16 md:mb-20 lg:mb-24">
             <div className="bg-gray-50/35 backdrop-blur-sm rounded-lg shadow-2xs border border-gray-100 overflow-hidden relative">
-              <span className="flex -space-x-3 absolute right-8 top-11 lg:-translate-4 lg:left-14 ">
+              <span className="flex -space-x-2 md:-space-x-3 lg:-space-x-4 absolute right-8 top-11 translate-y-1 lg:-translate-4 lg:left-14 ">
                 {[
                   "bg-primary-500",
                   "bg-primary-400",
@@ -56,7 +56,7 @@ const AboutUs = () => {
                 ].map((color, index) => (
                   <div
                     key={index}
-                    className={`w-10 lg:scale-80 h-10 rounded-full ${color}`}
+                    className={`w-8 lg:scale-80 h-8 lg:w-10 lg:h-10 rounded-full ${color}`}
                   />
                 ))}
               </span>
@@ -65,7 +65,7 @@ const AboutUs = () => {
                 <div className="flex-1 space-y-2  md:space-y-4">
                   <div className="inline-block">
                     <div className=" h-0.5 bg-primary-500 rounded-full mb-4"></div>
-                    <h3 className="text-lg md:text-lg pt-2 lg:pt-4  lg:text-xl font-bold text-gray-900 leading-tight">
+                    <h3 className="text-lg md:text-lg pt-6  lg:text-xl font-bold text-gray-900 leading-tight">
                       A Snapshot of Beiroot's
                       <span className="text-primary-500">
                         {" "}
@@ -106,9 +106,12 @@ const AboutUs = () => {
           </div>
 
           {/* Values Section - Enhanced */}
-          <div className="mb-16 md:mb-20 lg:mb-24 scroll-mt-20" id="values">
-            <div className="text-center mb-10 md:mb-12">
-              <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-3">
+          <div
+            className="mb-16 flex gap-4  bg-primary-100/15 rounded-xs  py-16 px-4 md:px-6 lg:px-8 flex-col  scroll-mt-20"
+            id="values"
+          >
+            <div className="text-center md:mb-12 flex flex-col gap-4">
+              <h2 className="text-xl md:text-xl lg:text-2xl font-bold text-gray-900">
                 {AboutUsData.values?.title || "Our Core Values"}
               </h2>
               <p className="text-gray-500 text-sm md:text-base mx-auto">
@@ -117,11 +120,11 @@ const AboutUs = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6">
               {AboutUsData.values?.items.map((value, index) => (
                 <div
                   key={value.id || index}
-                  className="text-center group bg-gradient-to-br from-surface/10 from-20% via-gray-50/40 to-shade/25 to-78% rounded-md border-gray-50 shadow-2xs  p-6 lg:rounded-lg transition-all duration-300"
+                  className="text-center group bg-gradient-to-br from-surface/60 from-20% via-gray-50/40 to-shade/75 to-78% rounded-md border-gray-50 shadow-2xs  p-6 lg:rounded-lg backdrop-blur-sm transition-all duration-300"
                 >
                   <div className="  rounded-full flex items-center justify-center mx-auto mb-2">
                     <div className="p-1 bg-primary- 50 rounded-full flex items-center justify-center">
