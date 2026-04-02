@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 import { heroVidio } from "../assets/video";
 import { useNavigate } from "react-router-dom";
@@ -6,14 +6,35 @@ import { useNavigate } from "react-router-dom";
 const Hero = () => {
   const navigate = useNavigate();
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
   const controls = useAnimation();
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     if (isInView) {
       controls.start("visible");
+      // Play video when in view
+      if (videoRef.current) {
+        videoRef.current.play();
+        setIsVideoPlaying(true);
+      }
+    } else {
+      // Pause video when not in view
+      if (videoRef.current) {
+        videoRef.current.pause();
+        setIsVideoPlaying(false);
+      }
     }
   }, [isInView, controls]);
+
+  // Handle video loop
+  const handleVideoEnded = () => {
+    if (videoRef.current && isInView) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+    }
+  };
 
   const handleNavigate = (id) => {
     navigate(id);
@@ -91,23 +112,58 @@ const Hero = () => {
     },
   };
 
+  // Video overlay animation variants
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 1.2,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const videoVariants = {
+    hidden: { scale: 1.1, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        duration: 8,
+        ease: "easeOut",
+      },
+    },
+    exit: {
+      scale: 1.1,
+      opacity: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
-    <div
+    <motion.div
       ref={sectionRef}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
       className="relative max-w-[100vw] w-full h-[calc(100vh-60px)] lg:h-[calc(100vh-97px)] overflow-hidden"
     >
       {/* Video Background with subtle zoom animation */}
       <motion.div
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 8, ease: "easeOut" }}
+        variants={videoVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "exit"}
         className="w-full h-full"
       >
         <video
-          autoPlay
-          loops
+          ref={videoRef}
+          autoPlay={isInView}
           muted
           playsInline
+          loop={false}
+          onEnded={handleVideoEnded}
           className="w-full object-cover h-full"
         >
           <source src={heroVidio} type="video/mp4" />
@@ -115,11 +171,23 @@ const Hero = () => {
         </video>
       </motion.div>
 
+      {/* Loading indicator while video loads */}
+      {!isVideoPlaying && isInView && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+        >
+          <div className="w-8 h-8 border-4 border-primary-500 border-t-transparent rounded-full animate-spin" />
+        </motion.div>
+      )}
+
       {/* Overlay with fade-in */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2 }}
+        variants={overlayVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
         className="absolute top-0 left-0 w-full h-full bg-black/50 flex flex-col justify-center items-center text-center px-4 sm:px-6 md:px-8"
       >
         <motion.div
@@ -155,13 +223,26 @@ const Hero = () => {
               className="text-3xl sm:text-4xl lg:text-5xl xl:text-[64px] font-bold text-shade leading-tight"
             >
               Experience the Taste of{" "}
-              <span className="text-primary-500 inline-block">Beiroot</span> in{" "}
-              <span className="whitespace-nowrap">Ilorin</span>
+              <motion.span
+                className="text-primary-500 inline-block"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                Beiroot
+              </motion.span>{" "}
+              in{" "}
+              <motion.span
+                className="whitespace-nowrap inline-block"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                Ilorin
+              </motion.span>
             </motion.h2>
 
             <motion.p
               variants={itemVariants}
-              className="text-[16px] md:text-[18px]  font-normal text-shade leading-relaxed"
+              className="text-[16px] md:text-[18px] font-normal text-shade leading-relaxed"
             >
               Enjoy freshly prepared meals, tasty snacks, and refreshing drinks
               made with quality ingredients and bold flavors. Whether you're
@@ -172,7 +253,7 @@ const Hero = () => {
             {/* Buttons */}
             <motion.div
               variants={itemVariants}
-              className="flex gap-3 sm:gap-4 w-full mt-2 lg:font-semibold justify-between items-center sm:max-w-[340px]  md:max-w-[380px] lg:max-w-[400px]"
+              className="flex gap-3 sm:gap-4 w-full mt-2 lg:font-semibold justify-between items-center sm:max-w-[340px] md:max-w-[380px] lg:max-w-[400px]"
             >
               <motion.a
                 href="https://wa.me/2348034567890"
@@ -206,7 +287,7 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 

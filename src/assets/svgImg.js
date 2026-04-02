@@ -25,6 +25,7 @@ import fastEasyOrdering from "../assets/FastEasyOrdering.svg";
 import affordablePrices from "./AffordablePrices.svg";
 import covenientLocation from "./convenientLocation.svg";
 import bigBeiroot from "./bigBeiroot.svg";
+import mobileGallery from "./MobileGallery.svg";
 
 export const svgImg = {
   beiroot,
@@ -54,4 +55,5 @@ export const svgImg = {
   covenientLocation,
   affordablePrices,
   bigBeiroot,
+  mobileGallery,
 };

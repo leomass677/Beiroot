@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { exploreData } from "../data/exploreData";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
@@ -110,6 +110,32 @@ const ExploreOurMenu = () => {
     },
   };
 
+  // Button animations
+  const buttonVariants = {
+    initial: { scale: 1 },
+    hover: { scale: 1.05, transition: { duration: 0.2 } },
+    tap: { scale: 0.95 },
+    disabled: { opacity: 0.5, scale: 1 },
+  };
+
+  // Swipe indicator animation
+  const swipeIndicatorVariants = {
+    animate: {
+      x: [0, 10, 0],
+      transition: {
+        duration: 1.5,
+        repeat: Infinity,
+        repeatType: "loop",
+      },
+    },
+  };
+
+  // Pagination dot animation
+  const dotVariants = {
+    inactive: { width: "0.5rem", backgroundColor: "#d1d5db" },
+    active: { width: "1.5rem", backgroundColor: "#f59e0b" },
+  };
+
   return (
     <motion.div
       ref={sectionRef}
@@ -123,13 +149,23 @@ const ExploreOurMenu = () => {
         variants={itemVariants}
         className="flex flex-col gap-3 md:gap-4 lg:gap-5 text-center mt-12 md:mt-16 lg:mt-20"
       >
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark bg-gradient-to-r from-primary-600 to-secondary-500 bg-clip-text text-transparent">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="text-lg md:text-xl lg:text-2xl font-semibold text-dark"
+        >
           Explore Our Menu
-        </h2>
-        <p className="text-gray-600 text-sm md:text-base lg:text-lg mx-auto px-4 ">
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-gray-600 text-sm md:text-base lg:text-lg mx-auto px-4 "
+        >
           Discover a variety of delicious meals, snacks, and extras carefully
           prepared to satisfy every craving.
-        </p>
+        </motion.p>
       </motion.div>
 
       {/* Cards Container with Buttons */}
@@ -137,9 +173,16 @@ const ExploreOurMenu = () => {
         {/* Desktop Navigation Buttons - Only visible on desktop */}
         {maxIndex > 0 && (
           <>
-            <button
+            <motion.button
               onClick={handlePrev}
               disabled={currentIndex === 0 || isAnimating}
+              variants={buttonVariants}
+              initial="initial"
+              whileHover={currentIndex !== 0 && !isAnimating ? "hover" : ""}
+              whileTap={currentIndex !== 0 && !isAnimating ? "tap" : ""}
+              animate={
+                currentIndex === 0 || isAnimating ? "disabled" : "initial"
+              }
               className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-gray-50 rounded-full transition-all duration-200 ${
                 currentIndex === 0 || isAnimating
                   ? "opacity-50 cursor-not-allowed"
@@ -150,11 +193,20 @@ const ExploreOurMenu = () => {
               <IoIosArrowBack
                 className={`text-lg md:text-xl ${currentIndex === 0 ? "text-gray-400" : "text-dark"}`}
               />
-            </button>
+            </motion.button>
 
-            <button
+            <motion.button
               onClick={handleNext}
               disabled={currentIndex >= maxIndex || isAnimating}
+              variants={buttonVariants}
+              initial="initial"
+              whileHover={
+                currentIndex < maxIndex && !isAnimating ? "hover" : ""
+              }
+              whileTap={currentIndex < maxIndex && !isAnimating ? "tap" : ""}
+              animate={
+                currentIndex >= maxIndex || isAnimating ? "disabled" : "initial"
+              }
               className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 hidden lg:flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-gray-50 rounded-full transition-all duration-200 ${
                 currentIndex >= maxIndex || isAnimating
                   ? "opacity-50  cursor-not-allowed"
@@ -165,14 +217,18 @@ const ExploreOurMenu = () => {
               <IoIosArrowForward
                 className={`text-lg md:text-xl ${currentIndex >= maxIndex ? "text-gray-400" : "text-dark"}`}
               />
-            </button>
+            </motion.button>
           </>
         )}
 
         {/* Swipe Indicator - Mobile & Tablet */}
         {maxIndex > 0 && (
-          <div className="flex justify-center mb-3 lg:hidden">
-            <div className="flex items-center gap-2 text-gray-400 text-xs animate-pulse">
+          <motion.div
+            variants={swipeIndicatorVariants}
+            animate="animate"
+            className="flex justify-center mb-3 lg:hidden"
+          >
+            <div className="flex items-center gap-2 text-gray-400 text-xs">
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -186,7 +242,12 @@ const ExploreOurMenu = () => {
                   d="M7 16l-4-4m0 0l4-4m-4 4h14m-6 4l4-4m0 0l-4-4m4 4H3"
                 />
               </svg>
-              <span>Swipe to explore more</span>
+              <motion.span
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                Swipe to explore more
+              </motion.span>
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -201,7 +262,7 @@ const ExploreOurMenu = () => {
                 />
               </svg>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Cards Grid - With Swipe Support on Mobile/Tablet */}
@@ -212,43 +273,62 @@ const ExploreOurMenu = () => {
           onTouchEnd={handleTouchEnd}
           className="px-2 md:px-8"
         >
-          <div
-            key={currentIndex}
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6"
-          >
-            {visibleItems.map((item, idx) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2, delay: idx * 0.03 }}
-                whileHover={{ y: -4 }}
-                className="group cursor-pointer"
-              >
-                <div className="flex flex-col items-center justify-center flex-1 h-full w-full bg-transparent shadow-none rounded-xl  hover:-translate-y-1 transition-all duration-200 p-3 sm:p-4 md:p-5 border border-surface  hover:border-primary-50">
-                  {/* Image Container */}
-                  <div className="relative mb-2 md:mb-3">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      className="object-contain w-[60px] sm:w-[70px] md:w-[80px] h-[60px] sm:h-[70px] md:h-[80px] transition-transform duration-200 group-hover:scale-105"
-                    />
-                  </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6"
+            >
+              {visibleItems.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2, delay: idx * 0.03 }}
+                  whileHover={{ y: -4 }}
+                  className="group cursor-pointer"
+                >
+                  <motion.div
+                    className="flex flex-col items-center justify-center flex-1 h-full w-full bg-transparent shadow-none rounded-xl hover:-translate-y-1 transition-all duration-200 p-3 sm:p-4 md:p-5 border border-surface hover:border-primary-50"
+                    whileHover={{
+                      borderColor: "#f59e0b",
+                      transition: { duration: 0.2 },
+                    }}
+                  >
+                    {/* Image Container */}
+                    <motion.div
+                      className="relative mb-2 md:mb-3"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        className="object-contain w-[60px] sm:w-[70px] md:w-[80px] h-[60px] sm:h-[70px] md:h-[80px] transition-transform duration-200 group-hover:scale-105"
+                      />
+                    </motion.div>
 
-                  {/* Content */}
-                  <div className="flex flex-col gap-1 items-center text-center w-full">
-                    <h6 className="font-bold text-dark text-xs sm:text-sm md:text-base line-clamp-1">
-                      {item.title}
-                    </h6>
-                    <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed line-clamp-2">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                    {/* Content */}
+                    <div className="flex flex-col gap-1 items-center text-center w-full">
+                      <motion.h6
+                        className="font-bold text-dark text-xs sm:text-sm md:text-base line-clamp-1"
+                        whileHover={{ color: "#f59e0b" }}
+                      >
+                        {item.title}
+                      </motion.h6>
+                      <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed line-clamp-2">
+                        {item.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
@@ -256,7 +336,7 @@ const ExploreOurMenu = () => {
       {maxIndex > 0 && (
         <div className="flex justify-center gap-1.5 sm:gap-2 mt-4">
           {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-            <span
+            <motion.span
               key={index}
               onClick={() => {
                 if (!isAnimating) {
@@ -265,11 +345,12 @@ const ExploreOurMenu = () => {
                   setTimeout(() => setIsAnimating(false), 200);
                 }
               }}
-              className={`h-1.5 sm:h-2 rounded-full transition-all duration-200 ${
-                currentIndex === index
-                  ? "w-4 sm:w-6 bg-primary-500"
-                  : "w-1.5 sm:w-2 bg-gray-300 hover:bg-gray-400"
-              }`}
+              variants={dotVariants}
+              initial="inactive"
+              animate={currentIndex === index ? "active" : "inactive"}
+              transition={{ duration: 0.2 }}
+              whileHover={{ scale: 1.2 }}
+              className="h-1.5 sm:h-2 rounded-full cursor-pointer"
               aria-label={`Go to page ${index + 1}`}
             />
           ))}
